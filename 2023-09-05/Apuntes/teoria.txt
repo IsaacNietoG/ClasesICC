@@ -1,0 +1,12 @@
+Las clases de java utilizan metodos especificos para modificar y mostrar el valor de sus variables. Las buenas practicas para estos metodos es llamarlas setVariable()
+y getVariable() segun su respectivo deber
+
+Cada clase cuenta con su metodo constructor, sobre el cual se le puede comunicar a la variable ciertos atributos sobre los que se quiere construir
+
+El metodo toString() es el que se invoca automaticamente cuando se invoca al objeto dentro de un contexto donde se pueda expresar una String. En el contexto actual (Llinea 4) se utiliza en un sout.println
+
+Los tres usos del this:
+1. Para aclarar a que variable nos referimos cuando una variable interna del objeto se llama igual que una variable solicitada por un metodo (Lineas 15 y 16)
+2. Para cuando se utilizan distintos objetos con atributos de igual nombre en un metodo (Linea 38)
+
+

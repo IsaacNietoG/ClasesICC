@@ -1,0 +1,6 @@
+Funcion cubo: programaCubo(operacion, x)
+Funcion cilindro: programaCilindro(operacion, x, y)
+Funcion cono: programaCono(operacio, x, y, z)
+            System.out.println("1. Area lateral");
+            System.out.println("2. Area total");
+            System.out.println("3. Volumen");

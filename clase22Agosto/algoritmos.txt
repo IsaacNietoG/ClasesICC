@@ -1,0 +1,26 @@
+
+Verificar si un número es par o es impar
+
+ALGORITMO
+Leer 'x'
+Si x es divisible entre 2 es decir el residuo es cero -> Es par
+Si no Es impar
+
+
+
+Ruleta
+
+Apuesta
+
+ALGORITMO
+Solicitar al usuario un número:(1-34 33->0 verde, 34->00 verde)
+1-32
+
+Comparar dato que salió con lo que el usuario proporcionó
+
+
+
+
+
+
+
