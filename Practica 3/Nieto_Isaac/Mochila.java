@@ -32,4 +32,10 @@ public class Mochila {
     public void setMonedas(int monedas){
         this.monedas = monedas;
     }
+
+    //Metodo toString
+    @Override
+    public String toString(){
+        return oranBerry + " - Oranberrys\n" + elixir + " - Elixir\n" + monedas + " - Monedas";
+    }
 }

@@ -1,16 +1,17 @@
 import java.util.Random;
 /* Plantilla de Pokemon
    De aqui formamos al resto de clases utilizadas para formar Pokemons de distintas "razas"
-   Todos estos metodos son los necesarios para la batalla y los requerimentos, excepto el asunto de borrar la confusion, que lo manejaré en la clase donde tenga mi main.
+   Todos estos metodos son los necesarios para la batalla y los requerimentos.
    Para crear una nueva "raza de pokemon":
-   - Overridea calcularDMG con su respectiva tabla de daños del pokemon dependiendo de su naturaleza
-   - Crea los metodos especificos de sus ataques, puedes utilizar el molde de ataqueGenerico.
-   -El constructor no cambia.
+   - Overrideamos calcularDMG con su respectiva tabla de daños del pokemon dependiendo de su naturaleza, utilizo la ultima tabla disponible pero esta la tuve que nerfear un poco para que una pelea sea mas divertida.
+   - Creamos los metodos especificos de sus ataques, puedes utilizar el molde de ataqueGenerico.
+   -El constructor recibe una static string del tipo del pokemon y otra de su nombre, la velocidad la aleatorizo en la pelea para que cada partida sea distinta.
  */
 public class Pokemon {
     protected String nombre;
     protected String tipo;
     protected double eVital;
+    protected int turnosConfundido = 0;
     protected boolean confused;
     protected Mochila backpack = new Mochila();
     protected int speed;
@@ -42,9 +43,17 @@ public class Pokemon {
         return this.tipo;
     }
     public double getEvital(){
+        if(this.eVital>500){
+            eVital = 500;
+        }
         return this.eVital;
     }
     public boolean getConfused(){
+        if(turnosConfundido >0){
+            turnosConfundido -= 1;
+        }else{
+            this.confused = false;
+        }
         return this.confused;
     }
     public int getSpeed(){
@@ -83,6 +92,7 @@ public class Pokemon {
     }
 
     public void setConfused(boolean confused) {
+        this.turnosConfundido = 2;
         this.confused = confused;
     }
 
@@ -127,7 +137,7 @@ public class Pokemon {
         case 2:
             if(backpack.getElixir()>0){
                 backpack.setElixir(backpack.getElixir()-1);
-                for (int i = 1; i >= 4;i++){
+                for (int i = 1; i <= 4;i++){
                     setEnergiaAtaque(i, 7);
                 }
                 return "Tu "+nombre+" ha consumido Elixir y restaura todos sus ataques";
@@ -157,25 +167,21 @@ public class Pokemon {
         }
     }
     //Ataques
-    //El ataque generico es la plantilla que luego usare para construir los otros ataques
-    public void ataqueGenerico(Pokemon pokemon){
-        String nombreAtaque = "ATAQUE GENERICO";
-        int idInternoAtaque = 0;
-        double DMG = 1;
+    public void atacar(String nombreAtaque, int idInternoAtaque, double DMG, Pokemon pokemon){
         boolean confusion = false;
-        int noConfundido = 0;
-        int energiaSuficiente = 0;
+        int noConfundido = 1;
+        int energiaSuficiente = 1;
 
         //Evalua si hay energia para el ataque y la descuenta tambien.
         if(getEnergiaAtaque(idInternoAtaque)==0){
             energiaSuficiente= 0;
         }else{
-            setEnergiaAtaque(idInternoAtaque, getEnergiaAtaque(idInternoAtaque)-1);
+            this.setEnergiaAtaque(idInternoAtaque, getEnergiaAtaque(idInternoAtaque)-1);
             energiaSuficiente = 1;
         }
 
         //Si el pokemon esta confundido, evalua si puede atacar
-        if(getConfused()){
+        if(this.getConfused()){
             if(rollConfusion(60)){
                 noConfundido = 0;
             }else{
@@ -205,5 +211,18 @@ public class Pokemon {
             pokemon.setConfused(confusion);
             System.out.println("El ataque fue muy fuerte! " + pokemon.getNombre() + " esta confundido!");
         }
+    }
+    //El ataque generico es la plantilla que luego usare para construir los otros ataques
+    public void ataqueGenerico(Pokemon pokemon){
+        String nombreAtaque = "ATAQUE GENERICO";
+        int idInternoAtaque = 0;
+        double DMG = 1;
+        atacar(nombreAtaque, idInternoAtaque, DMG, pokemon);
+    }
+
+    //Metodo toString
+    @Override
+    public String toString(){
+        return nombre + " de tipo " + tipo + " con EV de: " + eVital + " y velocidad de: " + speed;
     }
 }
